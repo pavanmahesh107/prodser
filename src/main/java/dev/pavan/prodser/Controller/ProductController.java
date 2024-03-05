@@ -1,12 +1,12 @@
 package dev.pavan.prodser.Controller;
 
 import dev.pavan.prodser.Service.ProductService;
+import dev.pavan.prodser.dtos.CreateProductRequestDto;
 import dev.pavan.prodser.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class ProductController {
@@ -35,5 +35,23 @@ public class ProductController {
             return ResponseEntity.notFound().build();
         }
     }
+
+
+    @PostMapping("/products")
+    public Product createProduct(@RequestBody CreateProductRequestDto requestDto){
+        return productService.createProduct(
+                requestDto.getTitle(),
+                requestDto.getDescription(),
+                requestDto.getCategory(),
+                requestDto.getPrice(),
+                requestDto.getImage()
+        );
+    }
+//    @PostMapping("/products")
+//    public ResponseEntity<Product> createProduct(@RequestBody CreateProductRequestDto request) {
+//        Product createdProduct = productService.createProduct(request);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
+//    }
+
 
 }

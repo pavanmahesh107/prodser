@@ -1,6 +1,7 @@
 package dev.pavan.prodser.Service;
 
 
+import dev.pavan.prodser.dtos.CreateProductRequestDto;
 import dev.pavan.prodser.dtos.FakeStoreProductDto;
 import dev.pavan.prodser.models.Product;
 import org.springframework.http.HttpStatus;
@@ -44,9 +45,49 @@ public class FakeStoreProductService implements ProductService {
         }
     }
 
+    @Override
+    public Product createProduct(CreateProductRequestDto request) {
+        return null;
+    }
 
 
+    @Override
+    public Product createProduct(String title,
+                                 String description,
+                                 String category,
+                                 double price,
+                                 String image) {
+
+        FakeStoreProductDto fakeStoreProductDto = new FakeStoreProductDto();
+        fakeStoreProductDto.setTitle(title);
+        fakeStoreProductDto.setDescription(description);
+        fakeStoreProductDto.setCategory(category);
+        fakeStoreProductDto.setPrice(price);
+        fakeStoreProductDto.setImage(image);
+        FakeStoreProductDto response = restTemplate.postForObject("https://fakestoreapi.com/products", //url
+                fakeStoreProductDto, //request body
+                FakeStoreProductDto.class); //data type of response (response json converting the json response into an object this class)
 
 
+        return response.toProduct();
+    }
+//    @Override
+//    public Product createProduct(CreateProductRequestDto request) {
+//        // Use RestTemplate to send a POST request to the FakeStore API
+//        // and create a new product
+//        ResponseEntity<FakeStoreProductDto> responseEntity = restTemplate.postForEntity(
+//                "https://fakestoreapi.com/products",
+//                request,
+//                FakeStoreProductDto.class
+//        );
+//
+//        if (responseEntity.getStatusCode() == HttpStatus.CREATED) {
+//            FakeStoreProductDto productDto = responseEntity.getBody();
+//            return productDto.toProduct();
+//        } else {
+//            // Handle error cases, e.g., throw an exception or log an error message
+//            throw new RuntimeException("Failed to create product");
+//        }
+//    }
 
 }

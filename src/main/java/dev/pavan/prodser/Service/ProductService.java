@@ -1,6 +1,7 @@
 package dev.pavan.prodser.Service;
 
 
+import dev.pavan.prodser.dtos.CreateProductRequestDto;
 import dev.pavan.prodser.models.Product;
 
 public interface ProductService {
@@ -14,4 +15,11 @@ public interface ProductService {
 
     Product getProductById(Long id);
 
+    Product createProduct(CreateProductRequestDto request);
+
+    Product createProduct(String title,
+                          String description,
+                          String category,
+                          double price,
+                          String image);
 }
