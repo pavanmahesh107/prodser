@@ -4,7 +4,6 @@ import dev.pavan.prodser.Service.ProductService;
 import dev.pavan.prodser.dtos.CreateProductRequestDto;
 import dev.pavan.prodser.models.Product;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,5 +52,24 @@ public class ProductController {
 //        return ResponseEntity.status(HttpStatus.CREATED).body(createdProduct);
 //    }
 
+    @PutMapping("/products/{id}")
+    public  ResponseEntity<Product> upadateProduct(@PathVariable("id") Long id){
+        Product product = productService.updateProduct(id);
+        if (product != null) {
+            return ResponseEntity.ok(product);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<Product> deleteProduct(@PathVariable("id") Long id){
+           Product product = productService.deleteProduct(id);
+        if (product != null) {
+            return ResponseEntity.ok(product);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
 
 }

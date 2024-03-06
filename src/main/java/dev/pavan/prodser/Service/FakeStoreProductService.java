@@ -46,12 +46,6 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public Product createProduct(CreateProductRequestDto request) {
-        return null;
-    }
-
-
-    @Override
     public Product createProduct(String title,
                                  String description,
                                  String category,
@@ -70,6 +64,30 @@ public class FakeStoreProductService implements ProductService {
 
 
         return response.toProduct();
+    }
+
+    @Override
+    public Product updateProduct(Long id) {
+        ResponseEntity<FakeStoreProductDto> responseEntity =restTemplate.getForEntity("https://fakestoreapi.com/products/" + id,
+                FakeStoreProductDto.class);
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            FakeStoreProductDto productDto = responseEntity.getBody();
+            return productDto.toProduct();
+        } else {
+            throw new RuntimeException("Failed to update product with ID: " + id);
+        }
+    }
+
+    @Override
+    public Product deleteProduct(Long id) {
+        ResponseEntity<FakeStoreProductDto> responseEntity = restTemplate.getForEntity("https://fakestoreapi.com/products/" + id,
+                FakeStoreProductDto.class);
+        if (responseEntity.getStatusCode() == HttpStatus.OK) {
+            FakeStoreProductDto productDto = responseEntity.getBody();
+            return productDto.toProduct();
+        } else {
+            throw new RuntimeException("Failed to delete product with ID: " + id);
+        }
     }
 
 

@@ -15,11 +15,15 @@ public interface ProductService {
 
     Product getProductById(Long id);
 
-    Product createProduct(CreateProductRequestDto request);
 
     Product createProduct(String title,
                           String description,
                           String category,
                           double price,
                           String image);
+
+    Product updateProduct(Long id);
+
+    Product deleteProduct(Long id);
 }
+
