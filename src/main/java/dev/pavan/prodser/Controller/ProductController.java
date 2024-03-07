@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 public class ProductController {
 
@@ -72,4 +74,25 @@ public class ProductController {
         }
     }
 
+    @GetMapping("/products")
+    public ResponseEntity<List<Product>> getAllProducts(){
+        List<Product> product= productService.getAllProducts();
+        if (product != null && !product.isEmpty()) {
+            return ResponseEntity.ok(product);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/products/categories")
+    public ResponseEntity<List<Object>> getAllCategories() {
+        List<Object> categories = productService.getAllCategories();
+        return ResponseEntity.ok(categories);
+    }
+
+    @GetMapping("/products/category/{category}")
+    public ResponseEntity<List<Product>> getParticularCategory(@PathVariable String category) {
+        List<Product> products = productService.getParticularCategory(category);
+        return ResponseEntity.ok(products);
+    }
 }

@@ -1,8 +1,9 @@
 package dev.pavan.prodser.Service;
 
 
-import dev.pavan.prodser.dtos.CreateProductRequestDto;
 import dev.pavan.prodser.models.Product;
+
+import java.util.List;
 
 public interface ProductService {
 
@@ -25,5 +26,12 @@ public interface ProductService {
     Product updateProduct(Long id);
 
     Product deleteProduct(Long id);
+
+    List<Product> getAllProducts();
+
+    List<Object> getAllCategories();
+
+    List<Product> getParticularCategory(String category);
 }
+
 
