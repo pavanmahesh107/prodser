@@ -13,7 +13,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-@Service
+@Service("FakeStoreProductService")
 public class FakeStoreProductService implements ProductService {
 
 
@@ -103,15 +103,20 @@ public class FakeStoreProductService implements ProductService {
 
     @Override
     public List<Product> getAllProducts() {
+        // Use generics to specify the type of the response body expected
         ResponseEntity<FakeStoreProductDto[]> responseEntity = restTemplate.getForEntity(
                 "https://fakestoreapi.com/products",
                 FakeStoreProductDto[].class
+                //FakeStoreProductDto[] indicates that the response body should be deserialized into an array of FakeStoreProductDto objects.
         );
 
         if (responseEntity.getStatusCode() == HttpStatus.OK) {
             FakeStoreProductDto[] productDtos = responseEntity.getBody();
 
             // Convert FakeStoreProductDtos to Products
+
+            //List<Product>: This return type uses generics to specify the type of the list that will be returned by
+            // the getAllProducts method. Product indicates that the method will return a list of Product objects.
 
             List<Product> products = new ArrayList<>();
             assert productDtos != null;
